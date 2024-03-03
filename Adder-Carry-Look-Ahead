@@ -1,0 +1,75 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 01.03.2024 22:42:46
+// Design Name: 
+// Module Name: Adder_Carry_Look_Ahead
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+//sw[0], sw[1], sw[2], sw[3], sw[4], sw[5], sw[6], sw[7], sw[8] 
+//A1   , A2   , A3   , A4   , B1   , B2   , B3   ,B4    , CIN
+
+//LED0, LED1, LED2, LED3, LED4
+//S0  , S1  , S2  , S3  ,COUT
+
+module Adder_Carry_Look_Ahead(
+input [0:8]sw, //entradas
+    
+    output LED0, //salidas
+    output LED1,
+    output LED2,
+    output LED3,
+    output LED4
+    );
+    //compuertas
+    logic C1,C2,C3,C4,C5,C6,C7,C8,C9,C10,C11,C12,C13,C14,C15,C16,C17,C18,C19,C20,C21,C22,C23,C24,C25,C26;
+    
+    //salidas
+    assign LED0 = C26;
+    assign LED1 = C25;
+    assign LED2 = C24;
+    assign LED3 = C23;
+    assign LED4 = C19;
+    
+    //entradas
+    assign C1 = sw[0] & sw[4];
+    assign C2 = sw[0] ^ sw[4];
+    assign C3 = sw[1] & sw[5];
+    assign C4 = sw[1] ^ sw[5];
+    assign C5 = sw[2] & sw[6];
+    assign C6 = sw[2] ^ sw[6];
+    assign C7 = sw[3] & sw[7];
+    assign C8 = sw[3] ^ sw[7];
+    
+    assign C9 = C2 & C4 & C6 & C8 & sw[8];
+    assign C10 = C1 & C4 & C6 & C8;
+    assign C11 = C3 & C6 & C8;
+    assign C12 = C6 & C8;
+    assign C13 = sw[8] & C4 & C2;
+    assign C14 = C1 & C4 & C6;
+    assign C15 = C3 & C4;
+    assign C16 = sw[8] & C4 & C2;
+    assign C17 = C1 & C4;
+    assign C18 = sw[8] & C2;
+    assign C19 = C9 | C10 | C11 | C12 | C7;
+    assign C20 = C13 | C14 | C15 | C5;
+    assign C21 = C16 | C17 | C3;
+    assign C22 = C18 | C1;
+    assign C23 = C20 ^ C8;
+    assign C24 = C21 ^ C6;
+    assign C25 = C22 ^ C4;
+    assign C26 = sw[8] ^ C2;
+    
+endmodule
